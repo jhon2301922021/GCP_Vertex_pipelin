@@ -37,7 +37,16 @@ steps:
       - '--allow-unauthenticated'
       - '--memory=2Gi'
 
-  # Step 4: Check status and use the URL of the deployed Cloud Run service
+  # Step 4: Add delay before checking status
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: 'sh'
+    args:
+      - '-c'
+      - |
+        echo "Adding delay before checking service status..."
+        sleep 30  # Delay for 60 seconds before starting status check
+
+  # Step 5: Check status and use the URL of the deployed Cloud Run service
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: 'sh'
     args:
@@ -46,7 +55,7 @@ steps:
         set -e  
         while [ "$(gcloud run services describe mle-template-service --region=us-central1 --platform=managed --format='value(status.conditions[0].status)')" != "True" ]; do 
           echo "Waiting for service to become stable..."
-          sleep 10 
+          sleep 10
         done 
         echo "Service is stable" 
         curl "$(gcloud run services describe mle-template-service --region=us-central1 --platform=managed --format='value(status.url)')/train_pipeline" 
