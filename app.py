@@ -3,7 +3,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def main():
-    return 'Modelo de ejemplo MLOps'
+    return 'Modelo de ejemplo MLOps V1'
 
 @app.route("/train_pipeline")
 def train_pipeline():
