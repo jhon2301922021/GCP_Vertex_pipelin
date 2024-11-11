@@ -1,5 +1,5 @@
 options:
-  logging: CLOUD_LOGGING_ONLY #guardar logs en Cloud Logging para ver un error en caso de que ocurra
+  logging: CLOUD_LOGGING_ONLY #guardar logs en Cloud Logging para ver un error en caso de que ocurra en el proceso
 
 steps:
   # Step 0: Build the Docker image from the Dockerfile
