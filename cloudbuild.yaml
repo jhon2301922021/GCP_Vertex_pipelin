@@ -1,5 +1,5 @@
 options:
-  logging: CLOUD_LOGGING_ONLY
+  logging: CLOUD_LOGGING_ONLY #guardar logs en Cloud Logging para ver un error en caso de que ocurra
 
 steps:
   # Step 0: Build the Docker image from the Dockerfile
@@ -52,13 +52,13 @@ steps:
     args:
       - '-c'
       - |
-        set -e  
-        while [ "$(gcloud run services describe mle-template-service --region=us-east4 --platform=managed --format='value(status.conditions[0].status)')" != "True" ]; do 
+        set -e
+        while [ "$(gcloud run services describe mle-template-service --region=us-east4 --platform=managed --format='value(status.conditions[0].status)')" != "True" ]; do
           echo "Waiting for service to become stable..."
           sleep 10
-        done 
-        echo "Service is stable" 
-        curl "$(gcloud run services describe mle-template-service --region=us-east4 --platform=managed --format='value(status.url)')/train_pipeline" 
+        done
+        echo "Service is stable"
+        curl "$(gcloud run services describe mle-template-service --region=us-east4 --platform=managed --format='value(status.url)')/train_pipeline"
         curl "$(gcloud run services describe mle-template-service --region=us-east4 --platform=managed --format='value(status.url)')/predict_pipeline"
 
 substitutions:
@@ -67,4 +67,3 @@ substitutions:
   _REPOSITORY_NAME: 'repo-mle-template'
   _IMAGE_NAME: 'mle-template'
   _CLOUD_RUN_SERVICE: 'mle-template-service'
-  
