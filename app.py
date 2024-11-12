@@ -3,7 +3,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def main():
-    return 'Modelo de ejemplo MLOps V1'
+    return 'Modelo de ejemplo MLOps V2'
 
 @app.route("/train_pipeline")
 def train_pipeline():
@@ -30,6 +30,5 @@ def on_demand_predict_pipeline():
 def monitoring():
     from pipeline.monitoring_prediction import all_models
     render_ = all_models()
-    
-    return render_
 
+    return render_
